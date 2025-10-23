@@ -176,5 +176,142 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<List<ECaja>> ListaCajaMes()
+        {
+            try
+            {
+                List<ECaja> rptLista = new List<ECaja>();
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_ListarCierreCajaMesActual", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                rptLista.Add(new ECaja()
+                                {
+                                    IdCaja = Convert.ToInt32(dr["IdCaja"]),
+                                    IdNegocio = Convert.ToInt32(dr["IdNegocio"]),
+                                    MontoTotal = Convert.ToDecimal(dr["MontoTotal"]),
+                                    Comentario = dr["Comentario"].ToString(),
+                                    Estado = Convert.ToBoolean(dr["Estado"]),
+                                    FechaRegistro = Convert.ToDateTime(dr["FechaRegistro"]).ToString("dd/MM/yyyy")
+                                });
+                            }
+                        }
+                    }
+                }
+                return new Respuesta<List<ECaja>>()
+                {
+                    Estado = true,
+                    Data = rptLista,
+                    Mensaje = "Informacion obtenidos correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Maneja cualquier error inesperado
+                return new Respuesta<List<ECaja>>()
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public Respuesta<List<ECaja>> ListaCajaMesNue(int IdNegocio)
+        {
+            try
+            {
+                List<ECaja> rptLista = new List<ECaja>();
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_ListarCierreCajaMeB", con))
+                    {
+                        comando.Parameters.AddWithValue("@IdNegocio", IdNegocio);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                rptLista.Add(new ECaja()
+                                {
+                                    IdCaja = Convert.ToInt32(dr["IdCaja"]),
+                                    IdNegocio = Convert.ToInt32(dr["IdNegocio"]),
+                                    MontoTotal = Convert.ToDecimal(dr["MontoTotal"]),
+                                    Comentario = dr["Comentario"].ToString(),
+                                    Estado = Convert.ToBoolean(dr["Estado"]),
+                                    FechaRegistro = Convert.ToDateTime(dr["FechaRegistro"]).ToString("dd/MM/yyyy")
+                                });
+                            }
+                        }
+                    }
+                }
+                return new Respuesta<List<ECaja>>()
+                {
+                    Estado = true,
+                    Data = rptLista,
+                    Mensaje = "Informacion obtenidos correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Maneja cualquier error inesperado
+                return new Respuesta<List<ECaja>>()
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public Respuesta<bool> RegistrarCaja(ECaja oNegocio)
+        {
+            try
+            {
+                bool respuesta = false;
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_RegistrarCierreCaja", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@IdNegocio", oNegocio.IdNegocio);
+                        cmd.Parameters.AddWithValue("@MontoTotal", oNegocio.MontoTotal);
+                        cmd.Parameters.AddWithValue("@Comentario", oNegocio.Comentario);
+
+                        SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        respuesta = Convert.ToBoolean(outputParam.Value);
+                    }
+                }
+                return new Respuesta<bool>
+                {
+                    Estado = respuesta,
+                    Mensaje = respuesta ? "Se registro correctamente" : "Error al registrar intente mas tarde"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
     }
 }

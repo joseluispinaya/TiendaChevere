@@ -22,6 +22,17 @@ namespace CapaPresentacion
         {
             try
             {
+                bool esAdmin = ValidarAdmin(Usuario);
+                if (!esAdmin)
+                {
+                    return new Respuesta<EUsuario>
+                    {
+                        Estado = false,
+                        Valor = "admin",
+                        Mensaje = "Ingreso como Administrador"
+                    };
+                }
+                
                 var obj = NNegocio.GetInstance().LoginUsuario(Usuario, Clave);
 
                 if (!obj.Estado)
@@ -29,11 +40,22 @@ namespace CapaPresentacion
                     return new Respuesta<EUsuario>
                     {
                         Estado = false,
+                        Valor = "",
                         Mensaje = obj.Mensaje
                     };
                 }
 
                 var objUser = obj.Data;
+                if (!objUser.Estado)
+                {
+                    return new Respuesta<EUsuario>
+                    {
+                        Estado = false,
+                        Valor = "",
+                        Mensaje = "El usuario no se encuentra activo para el uso del sistema."
+                    };
+                }
+
                 HttpContext.Current.Session["adminUs"] = objUser;
 
                 return obj;
@@ -44,6 +66,48 @@ namespace CapaPresentacion
                 {
                     Estado = false,
                     Valor = "",
+                    Mensaje = "Ocurrió un error: " + ex.Message
+                };
+            }
+        }
+
+        private static bool ValidarAdmin(string correo)
+        {
+            try
+            {
+                var respuesta = NNegocio.GetInstance().ListaUsuarios();
+
+                // Validar que la respuesta sea válida y contenga datos
+                if (respuesta == null || respuesta.Data == null || respuesta.Data.Count == 0)
+                {
+                    return false;
+                }
+
+                var listaUsuarios = respuesta.Data;
+
+                var item = listaUsuarios.FirstOrDefault(x => x.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
+                return item != null; // Devuelve true si encontró el correo
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<EAdministrador> LogeoAdmin(string Usuario, string Clave)
+        {
+            try
+            {
+                var obj = NNegocio.GetInstance().LoginAdmin(Usuario, Clave);
+
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = false,
                     Mensaje = "Ocurrió un error: " + ex.Message
                 };
             }

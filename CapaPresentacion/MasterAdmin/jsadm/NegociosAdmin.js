@@ -52,10 +52,12 @@ function listaNegocios() {
                 }
             },
             {
-                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm"><i class="fas fa-pencil-alt"></i></button>',
+                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
+                    '<button class="btn btn-info btn-product btn-sm mr-2"><i class="fas fa-tags"></i></button>' +
+                    '<button class="btn btn-success btn-users btn-sm"><i class="fas fa-user-cog"></i></button>',
                 "orderable": false,
                 "searchable": false,
-                "width": "50px"
+                "width": "150px"
             }
         ],
         "order": [[0, "desc"]],
@@ -96,6 +98,42 @@ $("#tbNegocios tbody").on("click", ".btn-editar", function (e) {
 $('#btnAddNuevoReg').on('click', function () {
     mostrarModal(null, true);
 });
+
+$("#tbNegocios tbody").on("click", ".btn-product", function (e) {
+    e.preventDefault();
+    let filaSeleccionada;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const model = table.row(filaSeleccionada).data();
+    var url = 'DetalleNegocio.aspx?id=' + model.IdNegocio;
+    window.location.href = url;
+
+    //swal("Mensaje", "Se pasara el ID: " + model.IdNegocio, "success")
+    //mostrarModal(model, false);
+})
+
+$("#tbNegocios tbody").on("click", ".btn-users", function (e) {
+    e.preventDefault();
+    let filaSeleccionada;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const model = table.row(filaSeleccionada).data();
+    var url = 'DetalleUserNego.aspx?id=' + model.IdNegocio;
+    window.location.href = url;
+
+    //swal("Mensaje", "Detalle de usuarios del Negocio: " + model.IdNegocio, "success")
+    //mostrarModal(model, false);
+})
 
 function habilitarBoton() {
     $('#btnGuardarCambios').prop('disabled', false);

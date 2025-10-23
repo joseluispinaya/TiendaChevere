@@ -116,14 +116,14 @@
 
         <button class="btn-login" id="btnInicia">Ingresar</button>
 
-        <p class="footer-text">© 2025 Mi Tienda. Todos los derechos reservados.</p>
+        <p class="footer-text">© 2025 El_Zero_Byte. Todos los derechos reservados.</p>
     </div>
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/toastr/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="vendor/loadingoverlay/loadingoverlay.min.js"></script>
-    <%--<script src="jsdev/Login.js?v=<%= DateTime.Now.ToString("yyyyMMddHHmmss") %>" type="text/javascript"></script>--%>
-    <script src="jsdev/Login.js" type="text/javascript"></script>
+    <script src="jsdev/Login.js?v=<%= DateTime.Now.ToString("yyyyMMddHHmmss") %>" type="text/javascript"></script>
+    <%--<script src="jsdev/Login.js" type="text/javascript"></script>--%>
 </body>
 </html>

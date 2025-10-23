@@ -88,5 +88,19 @@ namespace CapaPresentacion.MasterAdmin
             }
         }
 
+        [WebMethod]
+        public static Respuesta<bool> EstadoPermisos(int IdUsuario, bool Permisos)
+        {
+            try
+            {
+                Respuesta<bool> respuesta = NNegocio.GetInstance().EstadoPermisos(IdUsuario, Permisos);
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
     }
 }

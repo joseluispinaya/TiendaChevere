@@ -11,7 +11,7 @@ namespace CapaPresentacion
 {
 
 
-    public partial class PagePedidos
+    public partial class PageCaja
     {
     }
 }

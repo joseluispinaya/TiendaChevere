@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace CapaPresentacion.MasterAdmin
 {
-	public partial class HomeAdmin : System.Web.UI.MasterPage
+	public partial class DetalleNegocio : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-            Response.AppendHeader("Cache-Control", "no-store");
-        }
+
+		}
 	}
 }

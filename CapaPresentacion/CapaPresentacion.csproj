@@ -84,6 +84,8 @@
     <Content Include="Inicio.aspx" />
     <Content Include="jsdev\Login.js" />
     <Content Include="jsdev\Masterpa.js" />
+    <Content Include="jsdev\PageCaja.js" />
+    <Content Include="jsdev\PagePedidos.js" />
     <Content Include="jsdev\PageProductos.js" />
     <Content Include="js\sb-admin-2.js" />
     <Content Include="js\sb-admin-2.min.js" />
@@ -91,11 +93,17 @@
     <Content Include="js\vistas\chart-pie-demo.js" />
     <Content Include="js\vistas\datatables-demo.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MasterAdmin\DetalleNegocio.aspx" />
+    <Content Include="MasterAdmin\DetalleUserNego.aspx" />
     <Content Include="MasterAdmin\InicioAdmin.aspx" />
+    <Content Include="MasterAdmin\jsadm\DetalleNegocio.js" />
+    <Content Include="MasterAdmin\jsadm\DetalleUserNego.js" />
+    <Content Include="MasterAdmin\jsadm\MasterpaAd.js" />
     <Content Include="MasterAdmin\jsadm\NegociosAdmin.js" />
     <Content Include="MasterAdmin\jsadm\UsuariosPage.js" />
     <Content Include="MasterAdmin\NegociosAdmin.aspx" />
     <Content Include="MasterAdmin\UsuariosPage.aspx" />
+    <Content Include="PageCaja.aspx" />
     <Content Include="PagePedidos.aspx" />
     <Content Include="PageProductos.aspx" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -1823,6 +1831,20 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MasterAdmin\DetalleNegocio.aspx.cs">
+      <DependentUpon>DetalleNegocio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\DetalleNegocio.aspx.designer.cs">
+      <DependentUpon>DetalleNegocio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdmin\DetalleUserNego.aspx.cs">
+      <DependentUpon>DetalleUserNego.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\DetalleUserNego.aspx.designer.cs">
+      <DependentUpon>DetalleUserNego.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterAdmin\HomeAdmin.Master.cs">
       <DependentUpon>HomeAdmin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1850,6 +1872,13 @@
     </Compile>
     <Compile Include="MasterAdmin\UsuariosPage.aspx.designer.cs">
       <DependentUpon>UsuariosPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageCaja.aspx.cs">
+      <DependentUpon>PageCaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageCaja.aspx.designer.cs">
+      <DependentUpon>PageCaja.aspx</DependentUpon>
     </Compile>
     <Compile Include="PagePedidos.aspx.cs">
       <DependentUpon>PagePedidos.aspx</DependentUpon>

@@ -95,10 +95,11 @@ function listaUsuarios() {
                 }
             },
             {
-                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm"><i class="fas fa-pencil-alt"></i></button>',
+                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
+                    '<button class="btn btn-info btn-detalle btn-sm"><i class="fas fa-eye"></i></button>',
                 "orderable": false,
                 "searchable": false,
-                "width": "50px"
+                "width": "100px"
             }
         ],
         "order": [[0, "desc"]],
@@ -138,6 +139,60 @@ $("#tbUsuarios tbody").on("click", ".btn-editar", function (e) {
 
     const model = table.row(filaSeleccionada).data();
     mostrarModal(model, false);
+});
+
+$("#tbUsuarios tbody").on("click", ".btn-detalle", function (e) {
+    e.preventDefault();
+
+    let filaSeleccionada = $(this).closest("tr").hasClass("child")
+        ? $(this).closest("tr").prev()
+        : $(this).closest("tr");
+
+    const model = table.row(filaSeleccionada).data();
+    const estatus = !model.Permisos; // ← Aquí se invierte el valor
+
+    swal({
+        title: "Mensaje de Confirmación",
+        text: "¿Está seguro de modificar los permisos?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Sí, Aceptar",
+        cancelButtonText: "No, Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    },
+        function (respuesta) {
+            if (respuesta) {
+                $(".showSweetAlert").LoadingOverlay("show");
+
+                var request = {
+                    IdUsuario: model.IdUsuario,
+                    Permisos: estatus
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "UsuariosPage.aspx/EstadoPermisos",
+                    data: JSON.stringify(request),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: "json",
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $(".showSweetAlert").LoadingOverlay("hide");
+                        console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+                    },
+                    success: function (response) {
+                        $(".showSweetAlert").LoadingOverlay("hide");
+                        if (response.d.Estado) {
+                            listaUsuarios();
+                            swal("Mensaje", response.d.Mensaje, "success");
+                        } else {
+                            swal("Mensaje", response.d.Mensaje, "error");
+                        }
+                    }
+                });
+            }
+        });
 });
 
 $('#btnAddNuevoReg').on('click', function () {

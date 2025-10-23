@@ -12,6 +12,15 @@ const MODELO_BASE = {
     IdNegocio: 0
 }
 
+function tienePermisoAgregar() {
+    const usuario = getUsuarioNeg();
+    if (!usuario || !usuario.Permisos) {
+        swal("Atención", "No está habilitado para Modificar Productos.", "warning");
+        return false;
+    }
+    return true;
+}
+
 $(document).ready(function () {
     //$("#txtPrecioCompra").val("0"); Cantidad: 0,
     //$("#txtPrecioVenta").val("0");
@@ -99,11 +108,7 @@ $("#tbProductos tbody").on("click", ".btn-editar", function (e) {
 
     const model = table.row(filaSeleccionada).data();
 
-    const usuarioNeg = JSON.parse(sessionStorage.getItem('usuTienda'));
-    if (!usuarioNeg.Permisos) {
-        swal("Atención", "No esta habilitado para Agregar Productos.", "warning");
-        return;
-    }
+    if (!tienePermisoAgregar()) return;
 
     mostrarModal(model, false);
 });
@@ -129,11 +134,7 @@ $("#tbProductos tbody").on("click", ".btn-detalle", function (e) {
 
 $('#btnAddNuevoReg').on('click', function () {
 
-    const usuarioNeg = JSON.parse(sessionStorage.getItem('usuTienda'));
-    if (!usuarioNeg.Permisos) {
-        swal("Atención", "No esta habilitado para Agregar Productos.", "warning");
-        return;
-    }
+    if (!tienePermisoAgregar()) return;
 
     mostrarModal(null, true);
 });

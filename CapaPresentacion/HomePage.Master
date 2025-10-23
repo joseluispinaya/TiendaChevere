@@ -75,11 +75,11 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Administración</span>
+                    <span>Cierre de Caja</span>
                 </a>
                 <div id="collapseAdministracion" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Usuarios</a>
+                        <a class="collapse-item" href="PageCaja.aspx">Nuevo</a>
                         <a class="collapse-item" href="#">Reportes</a>
                     </div>
                 </div>

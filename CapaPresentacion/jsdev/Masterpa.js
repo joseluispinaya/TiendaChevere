@@ -1,14 +1,17 @@
 ﻿
-$(document).ready(function () {
-    const usuarioL = sessionStorage.getItem('usuTienda');
+function getUsuarioNeg() {
+    const data = sessionStorage.getItem('usuTienda');
+    return data ? JSON.parse(data) : null;
+}
 
-    if (usuarioL) {
+$(document).ready(function () {
+    const usuario = getUsuarioNeg();
+
+    if (usuario) {
         obtenerDetalleUsuarioRP();
     } else {
         window.location.href = 'Login.aspx';
     }
-
-    //obtenerEsquema();
 });
 
 $('#salirsis').on('click', function (e) {
@@ -17,13 +20,10 @@ $('#salirsis').on('click', function (e) {
 });
 
 function obtenerDetalleUsuarioRP() {
-    const usuarioL = sessionStorage.getItem('usuTienda');
-    if (usuarioL) {
-        const usuario = JSON.parse(usuarioL);
+    const usuario = getUsuarioNeg();
+    if (usuario) {
 
         $("#nomUserg").text(usuario.Apellidos);
-        //$("#imgUsumast").attr("src", usuario.ImageFull);
-
 
     } else {
         console.error('No se encontró información del usuario en sessionStorage.');

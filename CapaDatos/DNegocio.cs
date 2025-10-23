@@ -368,6 +368,157 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<List<EUsuario>> ListaUsuariosNego(int IdNegocio)
+        {
+            try
+            {
+                List<EUsuario> rptLista = new List<EUsuario>();
 
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_ObtenerUsuarioNego", con))
+                    {
+                        comando.Parameters.AddWithValue("@IdNegocio", IdNegocio);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                rptLista.Add(new EUsuario()
+                                {
+                                    IdUsuario = Convert.ToInt32(dr["IdUsuario"]),
+                                    Nombres = dr["Nombres"].ToString(),
+                                    Apellidos = dr["Apellidos"].ToString(),
+                                    Correo = dr["Correo"].ToString(),
+                                    UserSis = dr["UserSis"].ToString(),
+                                    Clave = dr["Clave"].ToString(),
+                                    Celular = dr["Celular"].ToString(),
+                                    IdNegocio = Convert.ToInt32(dr["IdNegocio"]),
+                                    Permisos = Convert.ToBoolean(dr["Permisos"]),
+                                    Estado = Convert.ToBoolean(dr["Estado"]),
+                                    FechaRegistro = Convert.ToDateTime(dr["FechaRegistro"]).ToString("dd/MM/yyyy")
+                                });
+                            }
+                        }
+                    }
+                }
+                return new Respuesta<List<EUsuario>>()
+                {
+                    Estado = true,
+                    Data = rptLista,
+                    Mensaje = "Usuarios obtenidos correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Maneja cualquier error inesperado
+                return new Respuesta<List<EUsuario>>()
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        // login admin
+
+        public Respuesta<EAdministrador> LoginAdmin(string Correo, string Clave)
+        {
+            try
+            {
+                EAdministrador obj = null;
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_LogeoAdmin", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        //comando.CommandTimeout = 30;
+                        comando.Parameters.AddWithValue("@Correo", Correo);
+                        comando.Parameters.AddWithValue("@Clave", Clave);
+
+                        con.Open();
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                obj = new EAdministrador
+                                {
+                                    IdAdmin = Convert.ToInt32(dr["IdAdmin"]),
+                                    Nombres = dr["Nombres"].ToString(),
+                                    Apellidos = dr["Apellidos"].ToString(),
+                                    Correo = dr["Correo"].ToString(),
+                                    UserSis = dr["UserSis"].ToString(),
+                                    Clave = dr["Clave"].ToString(),
+                                    Estado = Convert.ToBoolean(dr["Estado"])
+                                };
+                            }
+                        }
+                    }
+                }
+
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = obj != null,
+                    Data = obj,
+                    Mensaje = obj != null ? "Administrador obtenido correctamente" : "Credenciales incorrectas o usuario no encontrado"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones generales
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public Respuesta<bool> EstadoPermisos(int IdUsuario, bool Permisos)
+        {
+            try
+            {
+                bool respuesta;
+                //bool respuesta = false;
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_PermisosModif", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@IdUsuario", IdUsuario);
+                        cmd.Parameters.AddWithValue("@Permisos", Permisos);
+
+                        SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        respuesta = Convert.ToBoolean(outputParam.Value);
+                    }
+                }
+                return new Respuesta<bool>
+                {
+                    Estado = respuesta,
+                    Mensaje = respuesta ? "El estado se actualizo" : "Error al actualizar intente mas tarde"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message
+                };
+            }
+        }
     }
 }

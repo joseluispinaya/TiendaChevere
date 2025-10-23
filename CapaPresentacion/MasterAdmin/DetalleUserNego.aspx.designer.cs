@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace CapaPresentacion
+namespace CapaPresentacion.MasterAdmin
 {
 
 
-    public partial class PagePedidos
+    public partial class DetalleUserNego
     {
     }
 }

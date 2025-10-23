@@ -37,5 +37,21 @@ namespace CapaNegocio
         {
             return DProducto.GetInstance().ObtenerProductosporNegocio(IdNegocio);
         }
+
+        public Respuesta<List<ECaja>> ListaCajaMes()
+        {
+            return DProducto.GetInstance().ListaCajaMes();
+        }
+
+        public Respuesta<List<ECaja>> ListaCajaMesNue(int IdNegocio)
+        {
+            return DProducto.GetInstance().ListaCajaMesNue(IdNegocio);
+        }
+
+        public Respuesta<bool> RegistrarCaja(ECaja oNegocio)
+        {
+            return DProducto.GetInstance().RegistrarCaja(oNegocio);
+        }
+
     }
 }

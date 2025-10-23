@@ -104,21 +104,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupProdu">Producto:</span>
-                        </div>
-                        <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroupProdu"
-                            id="txtProdd" disabled>
-                    </div>
-
                     <div class="form-row">
-                        <div class="input-group input-group-sm col-sm-6 mb-3">
+                        <div class="input-group input-group-sm col-sm-8 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupProdu">Producto:</span>
+                            </div>
+                            <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroupProdu"
+                                id="txtProdd" disabled>
+                        </div>
+                        <div class="input-group input-group-sm col-sm-4 mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupcodigo">Codigo:</span>
                             </div>
                             <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroupcodigo"
                                 id="txtNumVenta" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group input-group-sm col-sm-6 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroucanrmm">Cantidad:</span>
+                            </div>
+                            <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroucanrmm"
+                                id="txtCantnnn" disabled>
                         </div>
                         <div class="input-group input-group-sm col-sm-6 mb-3">
                             <div class="input-group-prepend">
@@ -129,7 +138,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="input-group input-group-sm col-sm-4 mb-3">
+                        <div class="input-group input-group-sm col-sm-6 mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupreciocom">Precio Compra:</span>
                             </div>
@@ -137,7 +146,7 @@
                                 id="txtpreciocomm" disabled>
                         </div>
                 
-                        <div class="input-group input-group-sm col-sm-4 mb-3">
+                        <div class="input-group input-group-sm col-sm-6 mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGrouprecivent">Precio Venta:</span>
                             </div>
@@ -145,18 +154,10 @@
                                 id="txtpreciovennn" disabled>
                         </div>
 
-                        <div class="input-group input-group-sm col-sm-4 mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroucanrmm">Cantidad:</span>
-                            </div>
-                            <input type="text" class="form-control text-right" aria-label="Small" aria-describedby="inputGroucanrmm"
-                                id="txtCantnnn" disabled>
-                        </div>
-                        
                     </div>
                     <div class="form-group">
                         <label for="txtDescripciondet">Descripcion del producto</label>
-                        <textarea class="form-control" rows="3" id="txtDescripciondet" disabled></textarea>
+                        <textarea class="form-control" rows="2" id="txtDescripciondet" disabled></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

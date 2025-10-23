@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EAdministrador.cs" />
+    <Compile Include="ECaja.cs" />
     <Compile Include="ENegocio.cs" />
     <Compile Include="EProducto.cs" />
     <Compile Include="EUsuario.cs" />

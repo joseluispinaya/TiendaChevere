@@ -72,5 +72,6 @@
 </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="server">
-    <script src="jsadm/NegociosAdmin.js" type="text/javascript"></script>
+    <script src="jsadm/NegociosAdmin.js?v=<%= DateTime.Now.ToString("yyyyMMddHHmmss") %>" type="text/javascript"></script>
+    <%--<script src="jsadm/NegociosAdmin.js" type="text/javascript"></script>--%>
 </asp:Content>
